@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三大组件</title>
+  <script src="../threejs/three.js"></script>
+</head>
+<body>
+  <script>
+    //第一个组件 场景
+    var scene = new THREE.Scene();
+    //第二个组件 相机
+    //相机分为两种,第一种是透视相机 还有一种是平行的相机
+    //透视相机()第一个参数是夹角,第二个参数是近平面的宽比高,第三个参数是可以看见的
+    //近平面,第四个参数是可以看见的远平面
+    var camera = new THREE.PerspectiveCamera(75,
+    window.innerWidth/window.innerHeight,1,2000);
+
+    //设置相机的摆放位置
+    camera.position.z=5;
+    //第三个组件 渲染器 里面可以传递一些参数
+    
+    var renderer = new THREE.WebGLRenderer();
+    //设置渲染器的一个大小 这里设置的是屏幕的大小
+    renderer.setSize(window.innerWidth,window.innerHeight);
+    //将渲染器加入到页面当中
+    document.body.appendChild(renderer.domElement);
+
+
+    //这里定义了一个物体 立方体
+    // THREE.CubeGeometry(width, height, depth, widthSegments, heightSegments, depthSegments)
+    //width是x方向上的长度；height是y方向上的长度；depth是z方向上的长度
+    //这个是立方体
+    var geometry = new THREE.CubeGeometry(1,1,1);
+
+    //设置材质的颜色 蓝色
+    var material = new THREE.MeshBasicMaterial({color:0x0000ff});
+
+    //这个cube是一个object3d对象 这表示的就是一个3d的模型 
+    var cube = new THREE.Mesh(geometry,material);
+    scene.add(cube);
+
+    function render() {
+      //js中的函数 然浏览器去执行一次函数
+      requestAnimationFrame(render);
+      cube.rotation.x +=0.1;
+      // cube.rotation.y +=0.1;
+      renderer.render(scene,camera)
+    }
+
+    render();
+  </script>
+</body>
+</html>
